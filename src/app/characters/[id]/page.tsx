@@ -1,7 +1,15 @@
-import { getCharacterById } from "@/lib/api";
-import Image from "next/image";
-import Link from "next/link";
-import { ARROW_L } from "@/components";
+import { getCharacterById } from "@/lib/api"
+import Image from "next/image"
+import Link from "next/link"
+import { ARROW_L } from "@/components"
+
+import {
+  translateRace,
+  translateGender,
+  translateKi,
+  translateMaxKi,
+  translateAffiliation
+} from "@/functions/Characters.translate";
 
 export default async function CharacterPage({
   params,
@@ -51,58 +59,24 @@ export default async function CharacterPage({
           <div className="flex flex-col justify-center">
             <h1 className="text-4xl font-bold mb-4">{character.name}</h1>
             <p className="text-lg mb-2">
-              <strong>Raza: </strong>
-                {
-                  character.race === "Human" ? "Humano" : character.race ||
-                  character.race === "Android" ? "Androide" : character.race ||
-                  character.race === "Saiyan" ? "Saillayin" : character.race ||
-                  character.race === "Namekian" ? "Namekiano" : character.race ||
-                  character.race === "Majin" ? "Majin Buu" : character.race ||
-                  character.race === "Frieza Race" ? "Raza De Freezer" : character.race ||
-                  character.race === "Jiren Race" ? "Raza de Jiren" : character.race ||
-                  character.race === "God" ? "Dios" : character.race ||
-                  character.race === "Evil" ? "Malvado" : character.race ||
-                  character.race === "Unknown" ? "Desconocido" : character.race ||
-                  character.race === "Android" ? "Androide" : character.race
-                }
+              <strong>Raza:&nbsp;</strong>
+                {translateRace(character.race) || 'Unknown' }
             </p>
             <p className="text-lg mb-2">
               <strong>Género:&nbsp;</strong>
-                {
-                  character.gender === "Male" ? "Masculino" : character.gender ||
-                  character.gender === "Female" ? "Femenina" : character.gender ||
-                  character.gender === "Unknown" ? "Desconocido" : character.gender ||
-                  character.gender === "Other" ? "Otro" : character.gender
-                }
+                {translateGender(character.gender || "Unknown")}
             </p>
             <p className="text-lg mb-2">
               <strong>Ki:&nbsp;</strong>
-                {
-                  character.ki === "0" ? 'Sin Poder de pelea' : character.ki ||
-                  character.ki === "unknown" ? 'Desconocido' : character.ki
-                }
+                {translateKi(character.ki || "0")}
             </p>
             <p className="text-lg mb-2">
-              <strong>Máximo Ki:&nbsp;</strong>
-                {
-                  character.maxKi === "0" ? 'Sin maximo poder' : character.maxKi ||
-                  character.maxKi === "unknown" ? 'Desconocido' : character.maxKi
-                }
+              <strong>Máximo&nbsp;Ki:&nbsp;</strong>
+                {translateMaxKi(character.maxKi || "0")}
             </p>
             <p className="text-lg mb-4">
               <strong>Afiliación:&nbsp;</strong>
-                {
-                  character.affiliation === "Z Fighter" ? "Guerrero Z" : character.affiliation ||
-                  character.affiliation === "Villain" ? "Villano" : character.affiliation ||
-                  character.affiliation === "Red Ribbon Army" ? "Ejercito del Liston Rojo" : character.affiliation ||
-                  character.affiliation === "Army of Frieza" ? "Ejercito de Freezer" : character.affiliation ||
-                  character.affiliation === "Other" ? "Otro" : character.affiliation ||
-                  character.affiliation === "Freelancer" ? "Freelace" : character.affiliation ||
-                  character.affiliation === "Namekian Warrior" ? "Luchador Namekiano" : character.affiliation ||
-                  character.affiliation === "Pride Troopers" ? "La tropa del Orgullo" : character.affiliation ||
-                  character.affiliation === "Assistant of Vermoud" ? "Asistente de Vermoud" : character.affiliation ||
-                  character.affiliation === "Assistant of Beerus" ? "Asistente de Beerus" : character.affiliation
-                }
+                {translateAffiliation(character.affiliation || "Unknown")}
             </p>
             <p className="text-lg">{character.description}</p>
           </div>
