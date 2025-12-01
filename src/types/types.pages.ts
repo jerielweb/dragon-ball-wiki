@@ -7,7 +7,7 @@ export interface Characters {
 export interface Transformations {
     name: string;
     load: undefined;
-    imagen: string;
+    image: string;
     id: number;
     ki: string;
 }
