@@ -8,7 +8,7 @@ export default function HomeExplorer() {
             {HomeData.map((btr) => (
                 <div key={btr.id}
                 className="relative h-auto shadow-lg shadow-black overflow-hidden
-                flex flex-col justify-center
+                flex-1 flex-col justify-center
                 items-center cursor-pointer bg-black
                 rounded-2xl group md:max-w-sm mx-5 md:mx-0">
                     <a href={btr.route}

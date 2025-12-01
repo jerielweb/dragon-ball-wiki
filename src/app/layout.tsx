@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-      className={"bg-linear-to-br from-amber-50 via-orange-50 to-orange-400 bg-fixed bg-no-repeat"}>
+      className="bg-linear-to-br from-amber-50 via-orange-50 to-orange-400 bg-fixed amp-mask">
         {children}
       </body>
     </html>

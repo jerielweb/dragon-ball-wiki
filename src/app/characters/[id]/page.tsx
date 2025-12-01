@@ -1,4 +1,4 @@
-import { getCharacterById } from "@/lib/api"
+import { getCharacterById, getAllCharacters } from "@/lib/api"
 import Image from "next/image"
 import Link from "next/link"
 import { ARROW_L } from "@/components"
@@ -10,6 +10,18 @@ import {
   translateMaxKi,
   translateAffiliation
 } from "@/functions/Characters.translate";
+
+export async function generateStaticParams() {
+  try {
+    const characters = await getAllCharacters();
+    return characters.map((character) => ({
+      id: String(character.id),
+    }));
+  } catch (error) {
+    console.error("[generateStaticParams] error fetching characters", error);
+    return [];
+  }
+}
 
 export default async function CharacterPage({
   params,
@@ -44,51 +56,73 @@ export default async function CharacterPage({
   }
 
   return (
-    <main id="home" className="size-full min-h-screen flex flex-col items-center justify-center">
-      <div className="relative container mx-auto px-4 py-8 flex flex-col items-center justify-center max-w-[1000px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-amber-100 p-6 rounded-lg shadow-md">
-          <div className="flex justify-center h-96 md:h-[500px]">
+    <main className="size-full min-h-screen flex flex-col items-center justify-center">
+      <article className="flex max-w-7xl flex-col gap-7 p-3 size-full">
+        <header className="flex flex-row w-full md:gap-8 gap-2">
+          <div className="w-40 md:w-50 h-80 flex flex-col items-center justify-center border border-amber-600 rounded-lg md:p-3 p-1">
             <Image
-              width={500}
-              height={500}
-              src={character.image}
-              alt={character.name}
-              className="rounded-lg object-contain"
+            src={character.image}
+            alt={character.name}
+            width={300}
+            height={400}
+            className="rounded-lg size-full object-contain"
             />
           </div>
-          <div className="flex flex-col justify-center">
-            <h1 className="text-4xl font-bold mb-4">{character.name}</h1>
-            <p className="text-lg mb-2">
-              <strong>Raza:&nbsp;</strong>
-                {translateRace(character.race) || 'Unknown' }
-            </p>
-            <p className="text-lg mb-2">
-              <strong>Género:&nbsp;</strong>
-                {translateGender(character.gender || "Unknown")}
-            </p>
-            <p className="text-lg mb-2">
-              <strong>Ki:&nbsp;</strong>
-                {translateKi(character.ki || "0")}
-            </p>
-            <p className="text-lg mb-2">
-              <strong>Máximo&nbsp;Ki:&nbsp;</strong>
-                {translateMaxKi(character.maxKi || "0")}
-            </p>
-            <p className="text-lg mb-4">
-              <strong>Afiliación:&nbsp;</strong>
-                {translateAffiliation(character.affiliation || "Unknown")}
-            </p>
-            <p className="text-lg">{character.description}</p>
+          <div>
+            <h1 className="md:text-5xl text-3xl font-bold mb-4">{character.name}</h1>
+            <div className="flex flex-col gap-3">
+              <p className="md:text-2xl text-xl">
+                <strong>Raza:</strong>&nbsp;{translateRace(character.race)}
+              </p>
+              <p className="md:text-2xl text-xl">
+                <strong>Género:</strong>&nbsp;{translateGender(character.gender)}
+              </p>
+              <p className="md:text-2xl text-xl">
+                <strong>Ki:</strong>&nbsp;{translateKi(character.ki)}
+              </p>
+              <p className="md:text-2xl text-xl">
+                <strong>Ki Máximo:</strong>&nbsp;{translateMaxKi(character.maxKi)}
+              </p>
+              <p className="md:text-2xl text-xl">
+                <strong>Afiliación:</strong>&nbsp;{translateAffiliation(character.affiliation)}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="mt-8 absolute top-0 left-5 p-7">
-          <Link href="/characters" className="transition-all druration-300 ease-out active:scale-95 flex flex-row w-fit pr-2 h-fit items-center justify-center border border-black rounded-full hover:bg-black/10 aspect-scquare overflow-hidden" title="Volver">
-            <ARROW_L
-            text={false}
-            />
-          </Link>
-        </div>
-      </div>
+        </header>
+        <section>
+          <p className="text-xl font-medium">
+            {character.description || "Descripción no disponible."}
+          </p>
+        </section>
+                {character.transformations && character.transformations.length > 0 && (
+          <section className="w-full">
+            <h2 className="text-3xl font-bold mb-4">Transformaciones</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {character.transformations.map((transformation) => (
+                <div
+                  key={transformation.id}
+                  className="border border-amber-600 rounded-lg p-4 flex flex-col items-center"
+                >
+                  <Image
+                    src={transformation.image}
+                    alt={transformation.name}
+                    width={300}
+                    height={300}
+                    className="rounded-lg mb-2 object-contain"
+                  />
+                  <h3 className="text-xl font-semibold mb-2">
+                    {transformation.name}
+                  </h3>
+                  <p className="text-lg">
+                    <strong>Ki:&nbsp;</strong>
+                    {translateKi(transformation.ki || "0")}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+      </article>
     </main>
   );
 }

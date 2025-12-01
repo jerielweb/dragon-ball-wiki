@@ -10,14 +10,12 @@ export async function GET(request: Request) {
       return NextResponse.json({ items: [] });
     }
 
-    // Obtener todos los personajes (server-side)
     const items = await getAllCharacters();
 
     const qLower = q.toLowerCase();
     const results = items.filter((item) => item.name.toLowerCase().includes(qLower));
 
-    // Limitar resultados para no devolver demasiado
-    const limited = results.slice(0, 50);
+    const limited = results.slice(0, 100);
 
     return NextResponse.json({ items: limited });
   } catch (error) {

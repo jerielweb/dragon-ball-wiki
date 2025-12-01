@@ -1,4 +1,3 @@
-
 import { Characters, Item, Transformations } from "@/types/types.pages";
 export const getCharacters = async (page = 1): Promise<Characters> => {
     const url = `https://dragonball-api.com/api/characters?page=${page}`;
@@ -41,17 +40,4 @@ export const getAllCharacters = async (): Promise<Item[]> => {
 
     const allItems: Item[] = pages.flatMap((p) => p.items ?? []);
     return allItems;
-};
-
-
-
-export const getTransformations = async (page = 1): Promise<Transformations> => {
-    const url = `https://dragonball-api.com/api/transformations?page=${page}`;
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch transformations (status: ${response.status})`);
-    }
-    const data: Transformations = await response.json();
-    console.log(data);
-    return data;
 };
