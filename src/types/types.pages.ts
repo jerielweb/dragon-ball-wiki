@@ -19,7 +19,7 @@ export interface Item {
     image: string;
     affiliation: string;
     deletedAt: null;
-    transformations: string;
+    transformations: Transformations[];
 }
 
 export interface Links {
