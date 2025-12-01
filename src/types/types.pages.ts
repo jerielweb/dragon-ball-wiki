@@ -6,7 +6,10 @@ export interface Characters {
 }
 export interface Transformations {
     name: string;
-    load: undefined
+    load: undefined;
+    imagen: string;
+    id: number;
+    ki: string;
 }
 export interface Item {
     id: number;
