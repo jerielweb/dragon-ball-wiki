@@ -54,9 +54,8 @@ export default async function CharacterPage({
       </div>
     );
   }
-
   return (
-    <main className="size-full min-h-screen flex flex-col items-center justify-center">
+    <main className="size-full min-h-screen flex flex-col items-center justify-center py-8">
       <article className="flex max-w-7xl flex-col gap-7 p-3 size-full">
         <header className="flex flex-row w-full md:gap-8 gap-2">
           <div className="w-40 md:w-50 h-80 flex flex-col items-center justify-center border border-amber-600 rounded-lg md:p-3 p-1">
@@ -94,35 +93,35 @@ export default async function CharacterPage({
             {character.description || "Descripción no disponible."}
           </p>
         </section>
-                {character.transformations && character.transformations.length > 0 && (
+        {character.transformations && character.transformations.length > 0 && (
           <section className="w-full">
             <h2 className="text-3xl font-bold mb-4">Transformaciones</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {character.transformations.map((transformation) => (
-                <div
+                <article
                   key={transformation.id}
                   className="border border-amber-600 rounded-lg p-4 flex flex-col items-center"
                 >
-                  <Image
+                  <h3 className="text-2xl font-semibold mb-2">{transformation.name}</h3>
+                  <div className="flex w-40 md:w-50 h-80">
+                    <Image
                     src={transformation.image}
                     alt={transformation.name}
-                    width={300}
+                    width={200}
                     height={300}
-                    className="rounded-lg mb-2 object-contain"
-                  />
-                  <h3 className="text-xl font-semibold mb-2">
-                    {transformation.name}
-                  </h3>
-                  <p className="text-lg">
-                    <strong>Ki:&nbsp;</strong>
-                    {translateKi(transformation.ki || "0")}
+                    className="rounded-lg size-full object-contain"
+                    />
+                  </div>
+                  <p className="my-5 text-xl">
+                    <strong>Ki:</strong>&nbsp;{translateKi(transformation.ki)}
                   </p>
-                </div>
+                </article>
               ))}
             </div>
           </section>
         )}
       </article>
+
     </main>
   );
 }
