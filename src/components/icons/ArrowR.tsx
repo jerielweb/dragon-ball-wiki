@@ -1,5 +1,5 @@
 import type { BTN_ARROW_R } from "@/types/types.ui"
-export default function ArrowRight({text = true}:BTN_ARROW_R) {
+export default function ArrowRight({text = true, color, size}:BTN_ARROW_R) {
     return(
         <>
         {
@@ -13,14 +13,14 @@ export default function ArrowRight({text = true}:BTN_ARROW_R) {
         }
             <svg xmlns="http://www.w3.org/2000/svg"
             enableBackground="new 0 0 20 20"
-            height={35}
+            height={size}
             viewBox="0 0 20 20"
-            width={35}
-            fill="#fff"
+            width={size}
+            fill={color}
             >
                 <g>
                     <g>
-                        <rect fill="none" height="30" width="30" />
+                        <rect fill="none" height={size} width={size} />
                     </g>
                 </g>
                     <g>

@@ -38,6 +38,8 @@ export default function HomeExplorer() {
                         ">
                             <ARROW_R
                             text={false}
+                            size={48}
+                            color="#fff"
                             />
                         </span>
                         <span id="overlay"

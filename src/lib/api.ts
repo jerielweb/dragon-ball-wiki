@@ -1,4 +1,4 @@
-import { Characters, Item, Transformations } from "@/types/types.pages";
+import { Characters, Item } from "@/types/types.pages";
 export const getCharacters = async (page = 1): Promise<Characters> => {
     const url = `https://dragonball-api.com/api/characters?page=${page}`;
     const response = await fetch(url);
@@ -15,7 +15,6 @@ export const getCharacterById = async (id: number): Promise<Item | null> => {
         const res = await fetch(url);
         if (!res.ok) {
             try {
-                const text = await res.text();
             } catch {
             }
             return null;
@@ -29,14 +28,32 @@ export const getCharacterById = async (id: number): Promise<Item | null> => {
 }
 
 export const getAllCharacters = async (): Promise<Item[]> => {
-    const first = await getCharacters(1);
+    let first: Characters;
+    try {
+        first = await getCharacters(1);
+    } catch (err) {
+        console.error('[getAllCharacters] failed to fetch first page', err);
+        return [];
+    }
+
     const totalPages = first.meta?.totalPages ?? 1;
 
-    if (totalPages <= 1) return first.items;
+    if (totalPages <= 1) return first.items ?? [];
 
-    const pages = await Promise.all(
-        Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => getCharacters(page))
+    const pageNumbers = Array.from({ length: totalPages - 1 }, (_, i) => i + 2);
+
+    const settled = await Promise.allSettled(
+        pageNumbers.map((page) => getCharacters(page))
     );
+
+    const pages: Characters[] = [first];
+    for (const s of settled) {
+        if (s.status === 'fulfilled' && s.value) {
+            pages.push(s.value as Characters);
+        } else {
+            console.warn('[getAllCharacters] page fetch failed or rejected, skipping', s);
+        }
+    }
 
     const allItems: Item[] = pages.flatMap((p) => p.items ?? []);
     return allItems;

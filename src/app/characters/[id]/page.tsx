@@ -1,7 +1,7 @@
 import { getCharacterById, getAllCharacters } from "@/lib/api"
 import Image from "next/image"
 import Link from "next/link"
-import { ARROW_L } from "@/components"
+import { NAV_BAR } from "@/components"
 
 import {
   translateRace,
@@ -54,8 +54,30 @@ export default async function CharacterPage({
       </div>
     );
   }
+  const allCharacters = await getAllCharacters();
+  const currentIndex = allCharacters.findIndex(
+    (c) => Number(c.id) === Number(character.id)
+  );
+  const prevId =
+    currentIndex > 0 ? allCharacters[currentIndex - 1].id : null;
+  const nextId =
+    currentIndex >= 0 && currentIndex < allCharacters.length - 1
+      ? allCharacters[currentIndex + 1].id
+      : null;
+
   return (
-    <main className="size-full min-h-screen flex flex-col items-center justify-center py-8">
+    <>
+    <NAV_BAR
+    linkP={prevId ? `/characters/${prevId}` : `/characters`}
+    link={nextId ? `/characters/${nextId}` : `/characters`}
+    showtitle={true}
+    showHome={true}
+    title="Detalle del Personaje"
+    showLogo={true}
+    showNavLinks={true}
+    path="/characters"
+    />
+    <main className="size-full min-h-screen flex flex-col items-center justify-center py-8 pt-20">
       <article className="flex max-w-7xl flex-col gap-7 p-3 size-full">
         <header className="flex flex-row w-full md:gap-8 gap-2">
           <div className="w-40 md:w-50 h-80 flex flex-col items-center justify-center border border-amber-600 rounded-lg md:p-3 p-1">
@@ -123,5 +145,6 @@ export default async function CharacterPage({
       </article>
 
     </main>
+    </>
   );
 }

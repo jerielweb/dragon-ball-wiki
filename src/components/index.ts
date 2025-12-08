@@ -5,7 +5,9 @@ import ArrowLeftICON from "./icons/ArrowL";
 import ManageSearchICON from "./icons/ManageSearch"
 import PaginationButton from "./ui/Page_Button"
 import LoadingICON from "./icons/Loading";
+import NavBarComponent from "./ui/NavBar";
 
+export const NAV_BAR = NavBarComponent;
 export const LOADING_ICON = LoadingICON;
 export const MANAGE_SEARCH = ManageSearchICON
 export const SEARCH_BAR = SearchBar;
