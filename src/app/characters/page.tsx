@@ -3,7 +3,6 @@ import { ARROW_R, PAGINATION_BUTTON, NAV_BAR } from "@/components";
 import type { Item } from "@/types/types.pages";
 import Image from "next/image";
 import Link from "next/link";
-import {} from "@/components";
 
 export default async function Charaters({
   searchParams,

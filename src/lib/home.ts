@@ -16,14 +16,14 @@ const ExplorerData = [
         name: 'Planetas',
         imageSrc: PlanetIMG,
         text: 'Descubra Las mejores Planetas Dragon Ball',
-        route: '',
+        route: './planets',
     },
     {
         id:3,
         name: 'Transformaciones',
         imageSrc: TransformationIMG,
         text: 'Descubra Los Personajes mas poderosos de Dragon Ball',
-        route: '',
+        route: './transformations',
     }
 ]
 

@@ -18,7 +18,7 @@ export default function NavBarComponent({ linkP, link, showLogo, showNavLinks, s
                     </h1>
                 )
             }
-            <div className='flex flex-row w-fit h-full gap-5 items-center justify-center'>
+            <div className='flex flex-row w-fit h-full gap-5 items-center justify-center w-20'>
                 {
                     showHome && path &&
                     (
@@ -30,7 +30,7 @@ export default function NavBarComponent({ linkP, link, showLogo, showNavLinks, s
                     )
                 }
             {showNavLinks && (
-                <div className='flex flex-row gap-5'>
+                <div className='flex flex-row gap-2 w-24 h-full items-center justify-center'>
                     <a href={linkP} className="flex items-center justify-center size-10 border border-[#3f3f3f] rounded-full hover:bg-amber-600 active:bg-amber-600">
                     <div className="size-fit">
                         <ARROW_L text={false} color="#3f3f3f" size={40} />
