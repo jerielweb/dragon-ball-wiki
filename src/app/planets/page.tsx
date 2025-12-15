@@ -39,7 +39,7 @@ export default async function Page({
                                     {planet.isDestroyed === true ? "💥 Destruido" : "🪐 Intacto"}
                                 </span>
                                 <Link href={`/planets/${planet.id}`}>
-                                    <h5 className="mt-3 mb-6 text-2xl font-semibold tracking-tight text-heading">Planeta&nbsp;{planet.name}</h5>
+                                    <h5 className="mt-3 mb-6 text-2xl font-semibold tracking-tight text-heading">{planet.name}</h5>
                                 </Link>
                                 <Link href={`/planets/${planet.id}`} className="inline-flex rounded-xl items-center text-black bg-amber-300 box-border border border-transparent active:bg-amber-400 hover:bg-amber-400 shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 ">
                                     Ver Mas
