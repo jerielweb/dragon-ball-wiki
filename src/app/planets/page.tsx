@@ -26,7 +26,7 @@ export default async function Page({
                 showNavLinks={false}
             />
             <main className="flex items-center justify-center w-full mt-20">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center max-w-[1200px] gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center max-w-300 gap-4">
                     {items.map((planet: PlanetsItem) =>
                         <div className="bg-neutral-primary-soft block max-w-sm border border-default rounded-base shadow-xs overflow-hidden group rounded-xl" key={planet.id}>
                             <div className="overflow-hidden">

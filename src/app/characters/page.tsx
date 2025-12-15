@@ -35,14 +35,14 @@ export default async function Charaters({
             totalPages={meta.totalPages}
             baseUrl="/characters"
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center max-w-[1200px] gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center max-w-300 gap-4">
             {items.map((character: Item) => (
               <Link
                 key={character.id}
                 href={`/characters/${character.id}`}
                 className="relative flex flex-col border rounded-lg overflow-hidden group size-fit bg-amber-600"
               >
-                <div className="w-[280px] h-[500px] overflow-hidden">
+                <div className="w-70 h-125 overflow-hidden">
                   <span
                     id="overlay"
                     className="absolute w-80 h-20 inset-0 bg-black/50
