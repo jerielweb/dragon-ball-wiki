@@ -16,22 +16,22 @@ export interface Transformation {
 export interface Item {
     id: number;
     name: string;
-    ki?: string;
-    maxKi?: string;
-    race?: string;
-    gender?: string;
-    description?: string;
+    ki: string;
+    maxKi: string;
+    race: string;
+    gender: string;
+    description: string;
     image: string;
-    affiliation?: string;
-    deletedAt?: null | string;
-    transformations?: Transformation[];
+    affiliation: string;
+    deletedAt: null | string;
+    transformations: Transformation[];
 }
 
 export interface PlanetsItem {
     id: number;
     name: string;
-    isDestroyed?: boolean;
-    description?: string;
+    isDestroyed: boolean;
+    description: string;
     image: string;
     deletedAt?: null | string;
 }
