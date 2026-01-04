@@ -1,7 +1,7 @@
-export default async function Page() {
-    return(
-        <>
-            <h1>Pagina ID</h1>
-        </>
-    )
-} 
+export default function page() {
+  return(
+    <>
+      <div>Transformation Detail Page</div>
+    </>
+  )
+}

@@ -1,29 +1,24 @@
-import { NextResponse } from 'next/server';
-import { getAllTransformations } from '@/lib/api';
+import { NextResponse } from "next/server";
+import { getAllTransformations } from "@/lib/api";
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const q = searchParams.get('q')?.trim() ?? '';
+    const q = searchParams.get("q")?.trim() ?? "";
 
-    console.log(`[api/search/transformations] query: "${q}"`);
+    if (!q) return NextResponse.json({ items: [] });
 
-    if (!q) {
-      return NextResponse.json({ items: [] });
-    }
-
-    const items = await getAllTransformations();
-    console.log(`[api/search/transformations] got ${items.length} total transformations`);
-
+    const all = await getAllTransformations();
     const qLower = q.toLowerCase();
-    const results = items.filter((item) => item.name.toLowerCase().includes(qLower));
-    console.log(`[api/search/transformations] filtered to ${results.length} results`);
 
-    const limited = results.slice(0, 50);
+    const items = (all ?? []).filter((t) =>
+      typeof t.name === "string" ? t.name.toLowerCase().includes(qLower) : false
+    );
 
-    return NextResponse.json({ items: limited });
-  } catch (error) {
-    console.error('[api/search/transformations] error', error);
+    return NextResponse.json({ items });
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error("[api/search/transformations] error", err);
     return NextResponse.json({ items: [] }, { status: 500 });
   }
 }

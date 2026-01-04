@@ -94,6 +94,21 @@ export const getPlanets = async (page = 1): Promise<PlanetsResponse> => {
   }
 };
 
+export const getPlanetById = async (id: number): Promise<Planet | null> => {
+  try {
+    const url = `https://dragonball-api.com/api/planets/${id}`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      return null;
+    }
+    const data: Planet = await res.json();
+    return data;
+  } catch (error) {
+    console.error('[getPlanetById] error', error);
+    return null;
+  }
+};
+
 export const getAllPlanets = async (): Promise<Planet[]> => {
   let first: PlanetsResponse;
   try {
@@ -103,8 +118,6 @@ export const getAllPlanets = async (): Promise<Planet[]> => {
     return [];
   }
 
-  console.log(`[getAllPlanets] first page has ${first.items?.length ?? 0} items, meta:`, first.meta);
-  
   const totalPages = first.meta?.totalPages ?? 1;
 
   if (totalPages <= 1) {
@@ -128,6 +141,21 @@ export const getAllPlanets = async (): Promise<Planet[]> => {
   const allItems: Planet[] = pages.flatMap((p) => p.items ?? []);
   console.log(`[getAllPlanets] total items collected: ${allItems.length}`);
   return allItems;
+}
+
+export const getPlanestsById = async (id: number): Promise<Item | null> => {
+  try {
+    const url = `https://dragonball-api.com/api/planets/${id}`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      return null;
+    }
+    const data: Item = await res.json();
+    return data;
+  } catch (error) {
+    console.error('[getCharacterById] error', error);
+    return null;
+  }
 };
 
 // ========== TRANSFORMACIONES ==========

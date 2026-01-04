@@ -1,5 +1,5 @@
 import { getPlanets } from "@/lib/api";
-import { NAV_BAR } from "@/components";
+import { NAV_BAR, PAGINATION_BUTTON } from "@/components";
 import Link from "next/link";
 import Image from "next/image";
 import type { PlanetsItem } from "@/types/types.pages";
@@ -25,10 +25,17 @@ export default async function Page({
                 showLogo={true}
                 showNavLinks={false}
             />
-            <main className="flex items-center justify-center w-full mt-20">
+            <main className="flex flex-col items-center justify-center w-full mt-20 gap-10">
+                <div>
+                    <PAGINATION_BUTTON
+                        currentPage={currentPage}
+                        totalPages={meta?.totalPages ?? 1}
+                        baseUrl="/planets"
+                    />
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center max-w-300 gap-4">
                     {items.map((planet: PlanetsItem) =>
-                        <div className="bg-amber-100 block max-w-sm border border-default rounded-base shadow-xs overflow-hidden group rounded-xl" key={planet.id}>
+                        <div className="bg-amber-100 block max-w-sm border border-default rounded-base shadow-xs overflow-hidden group rounded-xl h-100" key={planet.id}>
                             <div className="overflow-hidden">
                                 <Link href={`/planets/${planet.id}`} className="overflow-hidden w-90 h-45 transition-all duration-300 ease-out">
                                     <Image className="rounded-t-base w-90 h-45 object-cover group-hover:scale-107 group-active:scale-107 transition-all duration-300 ease-out" src={planet.image} alt={planet.name} width={500} height={500}/>
@@ -48,7 +55,13 @@ export default async function Page({
                         </div>
                     )}
                 </div>
-                <div></div>
+                <div>
+                    <PAGINATION_BUTTON
+                        currentPage={currentPage}
+                        totalPages={meta?.totalPages ?? 1}
+                        baseUrl="/planets"
+                    />
+                </div>
             </main>
         </>
     );

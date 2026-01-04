@@ -1,6 +1,46 @@
-"use client";
+"use client"
+interface SearchResult {
+  type: "character" | "planet" | "transformation";
+  id: number;
+  name: string;
+  characterName?: string;
+  characterImage?: string;
+  characterId?: number;
+  transformationId?: number;
+  transformationName?: string;
+  transformationKi?: string;
+}
 
-import { Item } from "@/types/types.pages";
+type EnrichedTransformResult = {
+  characterId: number;
+  characterName: string;
+  characterImage?: string;
+  transformation: { id: number; name: string; image?: string; ki?: string };
+};
+
+type PlainTransform = { id: number; name: string; image?: string; ki?: string };
+
+function isEnrichedTransform(obj: unknown): obj is EnrichedTransformResult {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    "characterId" in obj &&
+    "transformation" in obj
+  );
+}
+
+function isPlainTransform(obj: unknown): obj is PlainTransform {
+  const rec = obj as Record<string, unknown>;
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    "id" in obj &&
+    "name" in obj &&
+    typeof rec.id === "number" &&
+    typeof rec.name === "string"
+  );
+}
+import { Item, PlanetsItem, Transformation } from "@/types/types.pages";
 import Link from "next/link";
 import { useEffect, useState, useRef, useTransition } from "react";
 import { MANAGE_SEARCH, LOADING_ICON } from "@/components";
@@ -60,12 +100,12 @@ export default function SearchBar() {
               id: item.id,
               name: item.name,
             })),
-            ...(planets.items ?? []).map((item: any) => ({
+            ...(planets.items ?? []).map((item: PlanetsItem) => ({
               type: "planet" as const,
               id: item.id,
               name: item.name,
             })),
-            ...(transformations.items ?? []).map((item: any) => ({
+            ...(transformations.items ?? []).map((item: Transformation) => ({
               type: "transformation" as const,
               id: item.id,
               name: item.name,
@@ -76,7 +116,8 @@ export default function SearchBar() {
             setSearchResults(results);
           });
         } catch (err) {
-          if ((err as any)?.name === "AbortError") return;
+          const e = err as unknown as { name?: string } | undefined;
+          if (e?.name === "AbortError") return;
           console.error("[SearchBar] search error", err);
           startTransition(() => {
             setSearchResults([]);

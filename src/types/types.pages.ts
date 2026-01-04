@@ -23,6 +23,14 @@ export interface Item {
     description: string;
     image: string;
     affiliation: string;
+    originPlanet?: {
+        id: number;
+        name: string;
+        isDestroyed?: boolean;
+        description?: string;
+        image?: string;
+        deletedAt?: null | string;
+    };
     deletedAt: null | string;
     transformations: Transformation[];
 }
